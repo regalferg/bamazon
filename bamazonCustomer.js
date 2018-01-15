@@ -7,94 +7,91 @@ var num = 0;
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
+    host: "localhost",
+    port: 3306,
 
-  // Your username
-  user: "service1",
+    // Your username
+    user: "service1",
 
-  // Your password
-  password: "Test123!!",
-  database: "bamazon_db"
+    // Your password
+    password: "Test123!!",
+    database: "bamazon_db"
 });
 
 // connect to the mysql server and sql database
 connection.connect(function(err) {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
-  // run the start function after the connection is made to prompt the user
-  start();
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId + "\n");
+    // run the start function after the connection is made to prompt the user
+    start();
 });
 // function which prompts the user for what action they should take
 function start() {
-  inquirer
-    .prompt({
-      name: "welcome",
-      type: "list",
-      message: "Welcome to Bamazon, your one stop shop for everything from Household Items to Rare Collectables!",
-      choices: ["SHOP", "EXIT"]
-    })
-    .then(function(answer) {
-      // based on their answer, either call the bid or the post functions
-      if (answer.welcome === "SHOP"){
-      	console.log("Time to Shop!");
-      	startShop();
-      }
-      
-      else {
-      	console.log("Please Visit Us Again Soon!");
-        process.exit();
-      }
-    });
+    inquirer
+        .prompt({
+            name: "welcome",
+            type: "list",
+            message: "Welcome to Bamazon, your one stop shop! We sell everything from Household Items to Rare Collectables! Please select SHOP to begin!",
+            choices: ["SHOP", "EXIT"]
+        })
+        .then(function(answer) {
+            // based on their answer, either call the bid or the post functions
+            if (answer.welcome === "SHOP") {
+                console.log("Time to Shop!");
+                startShop();
+            } else {
+                console.log("Please Visit Us Again Soon!");
+                process.exit();
+            }
+        });
 }
 
-function startShop(){
-	 inquirer
-	 .prompt([
-      {
-        name: "startmenu",
-        type: "list",
-        message: "Please select all Products or filter by Department to begin shopping: ",
-        choices: ["Product", "Department", "EXIT"]
-      }
-      
-    ])
-    .then(function(answer) {
-      // when finished prompting, insert a new item into the db with that info
-      if (answer.startmenu === "Product") {
-      	byProduct();
-   
-      }else if (answer.startmenu === "Department") {
+function startShop() {
+    inquirer
+        .prompt([{
+                name: "startmenu",
+                type: "list",
+                message: "Please select all Products or filter by Department to begin shopping: ",
+                choices: ["Product", "Department", "EXIT"]
+            }
 
-      	byDepartment();
-      }
-    	else{
-    		console.log("Please Visit Us Again Soon!");
-        process.exit();
-    	}
-    });
+        ])
+        .then(function(answer) {
+            // when finished prompting, insert a new item into the db with that info
+            if (answer.startmenu === "Product") {
+                byProduct();
+
+            } else if (answer.startmenu === "Department") {
+
+                byDepartment();
+            } else {
+                console.log("Please Visit Us Again Soon!");
+                process.exit();
+            }
+        });
 
 }
 
-function byProduct(){
-   	console.log("Products Listed Below:");
-      	console.log("**********************");
-      	  connection.query(
+function byProduct() {
+    console.log("Products Listed Below:");
+    console.log("**********************");
+    connection.query(
         "SELECT * FROM products;",
-      
-        function(err,rows,fields) {
-          if (err) throw err;
-          for (var i = 0; i < rows.length; i++) {
 
-          	console.log(JSON.stringify(rows[i]));
-          	console.log("**************************************************************************************************************************");
-          }
-          purchaseItem();
-     	
+        function(err, rows, fields) {
+            if (err) throw err;
+            for (var i = 0; i < rows.length; i++) {
+
+                console.log(JSON.stringify(rows[i]));
+                console.log("************************************");
+            }
+            purchaseItem();
+
         }
-      );
+    );
 
 }
+
 function byDepartment() {
 
     inquirer
@@ -276,5 +273,3 @@ function purchaseItem() {
     })
 
 }
-
-
