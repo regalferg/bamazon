@@ -46,6 +46,7 @@ function start() {
         });
 }
 
+//Start the Shop function, 1st option menu
 function startShop() {
     inquirer
         .prompt([{
@@ -72,6 +73,7 @@ function startShop() {
 
 }
 
+// Displays All Products in database
 function byProduct() {
     console.log("Products Listed Below:");
     console.log("**********************");
@@ -92,6 +94,7 @@ function byProduct() {
 
 }
 
+// Filters Products by Dept
 function byDepartment() {
 
     inquirer
@@ -115,7 +118,7 @@ function byDepartment() {
                         for (var i = 0; i < rows.length; i++) {
 
                             console.log(JSON.stringify(rows[i]));
-                            console.log("**************************************************************************************************************************");
+                            console.log("************************");
                         }
                         // console.log(JSON.stringify(rows));
 
@@ -136,7 +139,7 @@ function byDepartment() {
                         for (var i = 0; i < rows.length; i++) {
 
                             console.log(JSON.stringify(rows[i]));
-                            console.log("**************************************************************************************************************************");
+                            console.log("************************");
                         }
                         // console.log(JSON.stringify(rows));
 
@@ -155,9 +158,9 @@ function byDepartment() {
                         for (var i = 0; i < rows.length; i++) {
 
                             console.log(JSON.stringify(rows[i]));
-                            console.log("**************************************************************************************************************************");
+                            console.log("************************");
                         }
-                        // console.log(JSON.stringify(rows));
+                        
 
                         // re-prompt the user for if they want to choose again
                         purchaseItem();
@@ -169,14 +172,10 @@ function byDepartment() {
             }
 
         });
-
-
-
-
 }
 
+// Purchase Menu. Selects quantity, displays if inventory is available and price of quantity selected.
 function purchaseItem() {
-
 
     inquirer.prompt([{
 
