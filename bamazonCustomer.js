@@ -244,7 +244,7 @@ function purchaseItem() {
                         inquirer.prompt([{
                                 name: "additionalpurchases",
                                 type: "list",
-                                message: "Would you like tp purchase another item? ",
+                                message: "Would you like to purchase another item? ",
                                 choices: ["YES", "No"]
                             }
 
